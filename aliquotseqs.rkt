@@ -25,12 +25,17 @@
                   '())))
       '()))
 
-(define (plotter seq)
-  (define points
-    (for/list ([num (in-list seq)] [idx (in-naturals)])
-      (list idx num)))
+(define (generate-points seq)
+  (for/list ([num (in-list seq)] [idx (in-naturals)])
+    (list idx num)))
+
+(define (plot-points points)
   (plot (list (lines points #:color 'red #:width 4))))
+
+(define (plotter n limit)
+  (plot-points (generate-points (compute-sequence n
+                                                  limit))))
 
 (module+ main
   (plot-new-window? #t)
-  (plotter (compute-sequence 24 5)))
+  (plotter 24 5))
