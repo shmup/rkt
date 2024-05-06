@@ -1,5 +1,7 @@
 #lang racket
 
+(require plot)
+
 ; aliquot sequence
 ;
 ; given a number n, sum the factors excluding n, and repeat
@@ -21,7 +23,13 @@
                   '())))
       '()))
 
-(define hard-limit 5)
+(define (plotter seq)
+  (define points
+    (for/list ([num (in-list seq)] [idx (in-naturals)])
+      (list idx num)))
+  (plot (list (lines points #:color 'red #:width 4))))
+
+(define hard-limit 10)
 
 (compute-sequence 8 hard-limit) ; deficient
 (compute-sequence 24 hard-limit) ; abundant
@@ -29,3 +37,6 @@
 (compute-sequence 95 hard-limit) ; aspiring
 (compute-sequence 220 hard-limit) ; amicable
 (compute-sequence 1264460 hard-limit) ; sociable
+
+(plot-new-window? #t)
+(plotter (compute-sequence 24 hard-limit))
