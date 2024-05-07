@@ -12,13 +12,13 @@
   (foldl + 0 lst))
 
 (define (factors n)
-  (filter (lambda (x) (= (modulo n x) 0))
-          (range 1 (+ n 1))))
+  (drop-right (filter (lambda (x) (= (modulo n x) 0))
+                      (range 1 (+ n 1)))
+              1))
 
 (define (compute-sequence n limit)
   (if (> limit 0)
-      (let ([next-n (sum-factors
-                     (drop-right (factors n) 1))])
+      (let ([next-n (sum-factors (factors n))])
         (cons n
               (if (> next-n 0)
                   (compute-sequence next-n (- limit 1))
