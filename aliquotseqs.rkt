@@ -8,17 +8,17 @@
 ;
 ; given a number n, sum the factors excluding n, and repeat
 
-(define (sum-list lst)
+(define (sum-factors lst)
   (foldl + 0 lst))
 
-(define (aliquot-factors n)
+(define (factors n)
   (filter (lambda (x) (= (modulo n x) 0))
           (range 1 (+ n 1))))
 
 (define (compute-sequence n limit)
   (if (> limit 0)
-      (let ([next-n (sum-list
-                     (drop-right (aliquot-factors n) 1))])
+      (let ([next-n (sum-factors
+                     (drop-right (factors n) 1))])
         (cons n
               (if (> next-n 0)
                   (compute-sequence next-n (- limit 1))
